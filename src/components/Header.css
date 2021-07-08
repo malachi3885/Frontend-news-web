@@ -1,0 +1,8 @@
+.header {
+  background-color: #09357b;
+  color: white;
+}
+
+.header-logo {
+  display: grid;
+}
