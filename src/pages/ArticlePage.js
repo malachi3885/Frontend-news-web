@@ -20,16 +20,20 @@ const ArticlePage = ({ news }) => {
     setIsLoading(true);
     axios
       .get(
-        `https://content.guardianapis.com/${articleId}?api-key=test&show-fields=trailText,thumbnail,body&show-blocks=body`
+        `https://content.guardianapis.com/${articleId}?api-key=test&show-fields=trailText,thumbnail&show-blocks=body`
       )
       .then((res) => {
         const data = res.data.response.content;
+        const fetchBody = data.blocks.body[0].elements.filter(
+          (block) => block.type === "text"
+        );
         setArticleInfo({
           webPublicationDate: data.webPublicationDate,
           id: data.id,
-          webTitle: data.webTitle,
-          trailText: data.fields.trailText,
+          webTitle: data.webTitle.replace(/(\<.*?\>)/g, ""),
+          trailText: data.fields.trailText.replace(/(\<.*?\>)/g, ""),
           thumbnail: data.fields.thumbnail,
+          body: fetchBody,
         });
         setIsABookmark(bookmarkContext.checkIsABookmark(data.id));
         setIsLoading(false);
@@ -43,11 +47,15 @@ const ArticlePage = ({ news }) => {
   const addBookmark = () => {
     bookmarkContext.addBookmark(articleInfo);
     setIsABookmark(true);
+    setIsRemoveBookmark(false);
+    setIsSaveBookmark(true);
   };
 
   const removeBookmark = () => {
     bookmarkContext.removeBookmark(articleInfo.id);
     setIsABookmark(false);
+    setIsSaveBookmark(false);
+    setIsRemoveBookmark(true);
   };
 
   return (
@@ -78,26 +86,43 @@ const ArticlePage = ({ news }) => {
               <br />
 
               <div className="headline">{articleInfo.trailText}</div>
-              {/* <div className="article-body">{articleInfo.body}</div> */}
+              <br />
+              <div className="article-body">
+                {articleInfo.body &&
+                  articleInfo.body.map((block, index) => (
+                    <div key={index}>
+                      <div
+                        className="container"
+                        key={index}
+                        dangerouslySetInnerHTML={{
+                          __html: block.textTypeData.html,
+                        }}
+                      ></div>
+                      <br />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
           <div className="article__right">
-            {/* <div className="article-media"> */}
             <img className="article-image" src={articleInfo.thumbnail} alt="" />
-            {/* </div> */}
           </div>
-          {/* <div className="remove-bottom-tab">
-            <span>
-              <BsBookmark />
-            </span>
-            <span>REMOVED FROM BOOKMARKS</span>
-          </div>
-          <div className="add-bottom-tab">
-            <span>
-              <BsBookmarkFill />
-            </span>
-            <span>SAVED TO BOOKMARKS</span>
-          </div> */}
+          {isRemoveBookmar && (
+            <div className="remove-bottom-tab">
+              <span>
+                <BsBookmark />
+              </span>
+              <span>REMOVED FROM BOOKMARKS</span>
+            </div>
+          )}
+          {isSaveBookmark && (
+            <div className="add-bottom-tab">
+              <span>
+                <BsBookmarkFill />
+              </span>
+              <span>SAVED TO BOOKMARKS</span>
+            </div>
+          )}
         </div>
       )}
     </>

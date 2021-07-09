@@ -8,15 +8,8 @@ const BookmarkPage = () => {
   const bookmarkContext = useContext(BookmarkContext);
   const [bookmark, setBookmark] = useState(bookmarkContext.bookmark);
   const [orderBy, setOrderBy] = useState("newest");
-  //   const bookmark = bookmarkContext.bookmark;
-  //   console.log(bookmark);
 
   const changeOrderBy = (e) => {
-    // setOrderBy((prevState) => {
-    //   if (prevState === "newest") return "oldest";
-    //   else if (prevState === "oldest") return "newest";
-    //   return "newest";
-    // });
     setOrderBy(e.target.value);
     setBookmark(bookmark.reverse());
   };

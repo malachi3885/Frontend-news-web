@@ -12,7 +12,6 @@ import BookmarkPage from "./pages/BookmarkPage";
 import ArticlePage from "./pages/ArticlePage";
 import SearchResult from "./pages/SearchResult";
 import Footer from "./components/Footer";
-
 import "./App.css";
 
 function App() {

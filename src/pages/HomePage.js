@@ -18,7 +18,7 @@ const HomePage = () => {
     setSportsNewsIsLoading(true);
     axios
       .get(
-        `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=8`
+        `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=8&type=article`
       )
       .then((res) => {
         setTopNews(res.data.response.results);
@@ -27,7 +27,7 @@ const HomePage = () => {
       .catch((err) => console.log(err.message));
     axios
       .get(
-        `https://content.guardianapis.com/sport?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=3`
+        `https://content.guardianapis.com/sport?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=3&type=article`
       )
       .then((res) => {
         setSportsNews(res.data.response.results);
@@ -38,11 +38,6 @@ const HomePage = () => {
 
   const changeOrderBy = (e) => {
     setOrderBy(e.target.value);
-    // setOrderBy((prevState) => {
-    //   if (prevState === "newest") return "oldest";
-    //   else if (prevState === "oldest") return "newest";
-    //   return "newest";
-    // });
   };
 
   return (
@@ -74,8 +69,11 @@ const HomePage = () => {
                     news={{
                       webPublicationDate: news.webPublicationDate,
                       id: news.id,
-                      webTitle: news.webTitle,
-                      trailText: news.fields.trailText,
+                      webTitle: news.webTitle.replace(/(\<.*?\>)/g, ""),
+                      trailText: news.fields.trailText.replace(
+                        /(\<.*?\>)/g,
+                        ""
+                      ),
                       thumbnail: news.fields.thumbnail,
                     }}
                   />
@@ -85,7 +83,18 @@ const HomePage = () => {
             <div className="sport-news">
               <h1>Sports</h1>
               {sportsNews.map((news) => {
-                return <NewsCard key={news.id} news={news} />;
+                return (
+                  <NewsCard
+                    key={news.id}
+                    news={{
+                      webPublicationDate: news.webPublicationDate,
+                      id: news.id,
+                      webTitle: news.webTitle,
+                      trailText: news.fields.trailText,
+                      thumbnail: news.fields.thumbnail,
+                    }}
+                  />
+                );
               })}
             </div>
           </div>

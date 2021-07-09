@@ -15,6 +15,14 @@
   cursor: pointer;
 }
 
+.searching-off {
+  background-color: #09357b;
+}
+
+.searching-on {
+  background-color: #2153a3;
+}
+
 .search-icon:hover {
   cursor: pointer;
 }
