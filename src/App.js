@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import BookmarkPage from "./pages/BookmarkPage";
 import ArticlePage from "./pages/ArticlePage";
+import SearchResult from "./pages/SearchResult";
 import Footer from "./components/Footer";
 
 import "./App.css";
@@ -30,6 +31,9 @@ function App() {
               </Route>
               <Route path="/article/:articleId+">
                 <ArticlePage />
+              </Route>
+              <Route path="/search/:searchQuery">
+                <SearchResult />
               </Route>
               <Redirect to="/" />
             </Switch>

@@ -3,6 +3,8 @@
   width: 100%;
   bottom: 0;
   left: 0;
-  height: 6rem;
+  padding: 2.5rem 0;
+  /* height: 300px; */
   background-color: #09357b;
+  /* margin-top: 300px; */
 }

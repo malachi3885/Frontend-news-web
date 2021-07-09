@@ -11,12 +11,13 @@ const BookmarkPage = () => {
   //   const bookmark = bookmarkContext.bookmark;
   //   console.log(bookmark);
 
-  const changeOrderBy = () => {
-    setOrderBy((prevState) => {
-      if (prevState === "newest") return "oldest";
-      else if (prevState === "oldest") return "newest";
-      return "newest";
-    });
+  const changeOrderBy = (e) => {
+    // setOrderBy((prevState) => {
+    //   if (prevState === "newest") return "oldest";
+    //   else if (prevState === "oldest") return "newest";
+    //   return "newest";
+    // });
+    setOrderBy(e.target.value);
     setBookmark(bookmark.reverse());
   };
 
@@ -24,7 +25,7 @@ const BookmarkPage = () => {
     <>
       <div className="top-bookmark">
         <h1>All bookmark</h1>
-        <select id="orderBy" defaultValue={orderBy} onChange={changeOrderBy}>
+        <select id="orderBy" value={orderBy} onChange={changeOrderBy}>
           <option value="newest">Newest first</option>
           <option value="oldest">Oldest first</option>
         </select>

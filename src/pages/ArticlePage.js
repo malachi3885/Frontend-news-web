@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { BsFillBookmarkFill } from "react-icons/bs";
+import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 
 import BookmarkContext from "../store/bookmark-context";
 import LoadingSpinner from "../UI/LoadingSpinner";
@@ -13,6 +13,8 @@ const ArticlePage = ({ news }) => {
   const [isLoading, setIsLoading] = useState(false);
   const bookmarkContext = useContext(BookmarkContext);
   const [isABookmark, setIsABookmark] = useState(null);
+  const [isSaveBookmark, setIsSaveBookmark] = useState(false);
+  const [isRemoveBookmar, setIsRemoveBookmark] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,12 +59,12 @@ const ArticlePage = ({ news }) => {
           <div className="article__left">
             {isABookmark ? (
               <div className="add-bookmark" onClick={removeBookmark}>
-                <BsFillBookmarkFill />
+                <BsBookmarkFill />
                 <p>REMOVE BOOKMARK</p>
               </div>
             ) : (
               <div className="add-bookmark" onClick={addBookmark}>
-                <BsFillBookmarkFill />
+                <BsBookmarkFill />
                 <p>ADD BOOKMARK</p>
               </div>
             )}
@@ -84,6 +86,18 @@ const ArticlePage = ({ news }) => {
             <img className="article-image" src={articleInfo.thumbnail} alt="" />
             {/* </div> */}
           </div>
+          {/* <div className="remove-bottom-tab">
+            <span>
+              <BsBookmark />
+            </span>
+            <span>REMOVED FROM BOOKMARKS</span>
+          </div>
+          <div className="add-bottom-tab">
+            <span>
+              <BsBookmarkFill />
+            </span>
+            <span>SAVED TO BOOKMARKS</span>
+          </div> */}
         </div>
       )}
     </>

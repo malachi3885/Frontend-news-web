@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
+import { BsBookmarkFill } from "react-icons/bs";
 
 import "./ViewBookmark.css";
 
@@ -11,7 +12,8 @@ const ViewBookmark = () => {
   };
   return (
     <div className="bookmark-tab" onClick={goToBookmark}>
-      <p>VIEW BOOKMARK</p>
+      <BsBookmarkFill />
+      <span>VIEW BOOKMARK</span>
     </div>
   );
 };

@@ -36,12 +36,13 @@ const HomePage = () => {
       .catch((err) => console.log(err.message));
   }, [orderBy]);
 
-  const changeOrderBy = () => {
-    setOrderBy((prevState) => {
-      if (prevState === "newest") return "oldest";
-      else if (prevState === "oldest") return "newest";
-      return "newest";
-    });
+  const changeOrderBy = (e) => {
+    setOrderBy(e.target.value);
+    // setOrderBy((prevState) => {
+    //   if (prevState === "newest") return "oldest";
+    //   else if (prevState === "oldest") return "newest";
+    //   return "newest";
+    // });
   };
 
   return (
@@ -57,11 +58,7 @@ const HomePage = () => {
               </div>
               <div className="top-homepage__right">
                 <ViewBookmark />
-                <select
-                  id="orderBy"
-                  defaultValue={orderBy}
-                  onChange={changeOrderBy}
-                >
+                <select id="orderBy" value={orderBy} onChange={changeOrderBy}>
                   <option value="newest">Newest first</option>
                   <option value="oldest">Oldest first</option>
                 </select>
