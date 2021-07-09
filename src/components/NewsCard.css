@@ -1,0 +1,9 @@
+.news-card {
+  border: 2px solid black;
+  margin-bottom: 20px;
+}
+
+.media-card {
+  width: 150px;
+  height: 150px;
+}

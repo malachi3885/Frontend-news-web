@@ -3,7 +3,12 @@
   padding: 0;
 }
 
+main {
+  padding: 0 11.5vw;
+}
+
 body {
+  background-color: #f2f2f2;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

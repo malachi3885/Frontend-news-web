@@ -1,0 +1,24 @@
+.article-page {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.add-bookmark {
+  display: flex;
+  background-color: #09357b;
+  width: 200px;
+  color: white;
+}
+
+.article__left {
+  width: 70%;
+}
+
+.article__right {
+  width: 30%;
+}
+
+.article-image {
+  width: 100%;
+}
