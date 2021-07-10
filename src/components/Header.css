@@ -1,11 +1,14 @@
 .header {
   background-color: #09357b;
-  padding: 0 30px;
+  width: 100%;
   color: white;
   display: flex;
   justify-content: space-between;
-  /* position: fixed;
-  width: 100%; */
+}
+
+.header-search {
+  margin-right: 100px;
+  border-bottom: white 1px solid;
 }
 
 .header-logo {
@@ -15,8 +18,11 @@
   cursor: pointer;
 }
 
-.searching-off {
-  background-color: #09357b;
+.search-query {
+  border: none;
+  background-color: transparent;
+  color: white;
+  outline-width: 0;
 }
 
 .searching-on {
@@ -25,4 +31,9 @@
 
 .search-icon:hover {
   cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+  color: white;
+  opacity: 0.4;
 }

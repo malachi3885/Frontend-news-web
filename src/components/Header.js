@@ -35,13 +35,13 @@ const Header = () => {
         <span>Peaks</span>
       </h1>
       <div
-        className={`header-search ${
-          isSearching ? "searching-on" : "searching-off"
-        }`}
+        className={`header-search ${isSearching ? "searching-on" : ""}`}
         ref={searchAreaRef}
       >
         {isSearching && (
           <input
+            className="search-query"
+            type="text"
             placeholder="Search all news"
             ref={searchInputRef}
             onChange={handleSearch}
