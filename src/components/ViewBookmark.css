@@ -2,11 +2,11 @@
   background-color: #09357b;
   color: white;
   width: 13vw;
-  padding: 4.5px 0.833vw;
+  padding: 0.5vw 0.833vw;
   border-radius: 4px;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: calc(8px + 0.5vw);
   display: flex;
 }
 
@@ -20,8 +20,4 @@
 
 @media only screen and (max-width: 768px) {
   /* mobile phone */
-  .bookmark-tab {
-    font-size: 8px;
-    padding: 0px 0.833vw;
-  }
 }

@@ -19,7 +19,7 @@
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.42);
   width: 17.708vw;
-  height: 30px;
+  height: 50px;
   margin-left: 1.875vw;
 }
 
@@ -80,6 +80,15 @@
   max-width: 24.306vw;
   min-width: 200px;
   min-height: 200px;
+}
+
+.selector {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  width: 17.708vw;
+  height: calc(12px + 2vw);
+  margin-left: 1.875vw;
+  font-size: calc(12px + 0.1vw);
 }
 
 @media only screen and (min-width: 769px) {
