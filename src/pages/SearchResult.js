@@ -31,7 +31,6 @@ const compareInputs = (inputKeys, oldInputs, newInputs) => {
     const newInput = newInputs[key];
     if (oldInput !== newInput) {
       stateChange = key;
-      //   console.log("change detected", key, "old:", oldInput, "new:", newInput);
     }
   });
 };
@@ -63,9 +62,7 @@ const SearchResult = () => {
       document.documentElement.scrollHeight;
 
     if (bottom) {
-      //   console.log("at bottom page");
       if (currentPage < pages) {
-        // console.log("current page + 1");
         setCurrentPage((precState) => {
           return precState + 1;
         });
@@ -87,7 +84,6 @@ const SearchResult = () => {
     const identifier = setTimeout(() => {
       if (stateChange === "searchQueryReplaced") {
         setIsLoading(true);
-
         setCurrentPage(1);
         setOrderBy("newest");
         axios
@@ -96,7 +92,6 @@ const SearchResult = () => {
           )
           .then((res) => {
             const response = res.data.response;
-            //   console.log("pages =", response.pages);
             setPages(response.pages);
             setSearchNews(response.results);
 
@@ -108,16 +103,13 @@ const SearchResult = () => {
           });
       } else if (stateChange === "orderBy") {
         setIsLoading(true);
-        console.log("Sending API2");
 
-        console.log("orderBy change");
         axios
           .get(
             `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=15&q=${searchQueryReplaced}&type=article&page=1`
           )
           .then((res) => {
             const response = res.data.response;
-            //   console.log("pages =", response.pages);
             setSearchNews(response.results);
 
             setIsLoading(false);
@@ -127,7 +119,6 @@ const SearchResult = () => {
             setIsLoading(false);
           });
       } else if (stateChange === "currentPage") {
-        console.log("current page change");
         axios
           .get(
             `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=15&q=${searchQueryReplaced}&type=article&page=${currentPage}`
