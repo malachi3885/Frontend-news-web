@@ -114,7 +114,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="sport-news">
-              <h1>Sports</h1>
+              <h2>Sports</h2>
               <div className="sport-news-content">
                 {sportsNews.map((news, index) => (
                   <div className="medium-size" key={index}>

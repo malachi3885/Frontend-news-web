@@ -80,7 +80,6 @@ const SearchResult = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     const identifier = setTimeout(() => {
       if (stateChange === "searchQueryReplaced") {
         setIsLoading(true);

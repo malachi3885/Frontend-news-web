@@ -29,3 +29,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+h1,
+h2 {
+  font-family: Georgia;
+  font-style: Bold;
+}
+
+h1 {
+  font-size: calc(5vw - 8px);
+}
+
+h2 {
+  font-size: calc(4vw - 8px);
+}
+
+@media only screen and (max-width: 768px) {
+  /* mobile phone */
+  h1 {
+    font-size: 5vw;
+  }
+  h2 {
+    font-size: 4vw;
+  }
+}

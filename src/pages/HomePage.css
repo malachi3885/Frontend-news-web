@@ -107,11 +107,15 @@
     display: block;
   }
 
+  .top-news__upper-right,
+  .top-news__lower,
+  .sport-news {
+    justify-content: center;
+    display: grid;
+  }
+
   .top-news__upper-right {
     margin-top: calc(300px - 30vw);
-    justify-content: center;
-    align-items: center;
-    align-content: center;
   }
   .content-homepage {
     display: grid;

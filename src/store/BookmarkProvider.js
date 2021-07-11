@@ -19,7 +19,6 @@ const BookmarkProvider = (props) => {
     const newBookmark = [...bookmark, news];
     newBookmark.sort(compare);
     setBookmark(newBookmark);
-    console.log(newBookmark);
     return;
   };
 
