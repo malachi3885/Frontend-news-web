@@ -1,9 +1,110 @@
 .news-card {
-  border: 2px solid black;
   margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.news-card:hover {
+  cursor: pointer;
 }
 
 .media-card {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
+
+.description-card {
+  position: absolute;
+  width: 93%;
+  bottom: 0;
+  padding: 3.5%;
+  left: 0;
+  background-color: rgba(9, 53, 123, 0.9);
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 10;
+}
+
+.dont-show-image {
+  height: 100%;
+}
+
+.show-image {
+  height: 33%;
+}
+
+.news-title {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  /* font-size: 1rem; */
+}
+
+.news-description {
+  /* font-size: 10px; */
+}
+
+.the-peaks-image {
+  width: 100%;
+  height: 100%;
+  background-color: #0d47a1;
+  color: white;
+  display: grid;
+  position: relative;
+}
+
+.the-peaks-image-top {
+  font-size: 35px;
+  position: absolute;
+  top: 13%;
+  left: 43%;
+  transform: translateX(-50%);
+}
+
+.the-peaks-image-bottom {
+  font-size: 60px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.large-text {
+  font-size: 2vw;
+}
+
+.onlyText-text {
+  font-size: 1.5vw;
+}
+
+.normal-text,
+.small-text {
+  font-size: 1.2vw;
+}
+
+@media only screen and (max-width: 768px) {
+  /* mobile phone */
+  .large-text {
+    font-size: 2.6vh;
+  }
+
+  .onlyText-text {
+    font-size: 1.5vh;
+  }
+
+  .normal-text {
+    font-size: 1.8vh;
+  }
+
+  .small-text {
+    font-size: 1.5vh;
+  }
+}
+
+/* .news-trail-text {
+  font-size: 10px;
+  color: green;
+} */

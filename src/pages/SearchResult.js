@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -7,35 +7,157 @@ import NewsCard from "../components/NewsCard";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import "./SearchResult.css";
 
+const mapToCard = (news, index) => {
+  return (
+    <div className="medium-size" key={index}>
+      <NewsCard
+        news={{
+          webPublicationDate: news.webPublicationDate,
+          id: news.id,
+          webTitle: news.webTitle.replace(/(\<.*?\>)/g, ""),
+          trailText: news.fields.trailText.replace(/(\<.*?\>)/g, ""),
+          thumbnail: news.fields.thumbnail,
+        }}
+      />
+    </div>
+  );
+};
+
+let stateChange = null;
+
+const compareInputs = (inputKeys, oldInputs, newInputs) => {
+  inputKeys.forEach((key) => {
+    const oldInput = oldInputs[key];
+    const newInput = newInputs[key];
+    if (oldInput !== newInput) {
+      stateChange = key;
+      //   console.log("change detected", key, "old:", oldInput, "new:", newInput);
+    }
+  });
+};
+const useDependenciesDebugger = (inputs) => {
+  const oldInputsRef = useRef(inputs);
+  const inputValuesArray = Object.values(inputs);
+  const inputKeysArray = Object.keys(inputs);
+  useMemo(() => {
+    const oldInputs = oldInputsRef.current;
+
+    compareInputs(inputKeysArray, oldInputs, inputs);
+
+    oldInputsRef.current = inputs;
+  }, inputValuesArray); // eslint-disable-line react-hooks/exhaustive-deps
+};
+
 const SearchResult = () => {
   const [searchNews, setSearchNews] = useState([]);
+  const [pages, setPages] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const [orderBy, setOrderBy] = useState("newest");
   const [isLoading, setIsLoading] = useState(false);
   const searchQuery = useParams().searchQuery.trim();
   const searchQueryReplaced = searchQuery.replace(/\s/g, " AND ");
 
+  const handleScroll = () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+
+    if (bottom) {
+      //   console.log("at bottom page");
+      if (currentPage < pages) {
+        // console.log("current page + 1");
+        setCurrentPage((precState) => {
+          return precState + 1;
+        });
+      }
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(
-        `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=15&q=${searchQueryReplaced}&type=article`
-      )
-      .then((res) => {
-        const response = res.data.response;
-        setSearchNews(response.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }, [searchQueryReplaced, orderBy]);
+    const identifier = setTimeout(() => {
+      if (stateChange === "searchQueryReplaced") {
+        setIsLoading(true);
+
+        setCurrentPage(1);
+        setOrderBy("newest");
+        axios
+          .get(
+            `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=newest&page-size=15&q=${searchQueryReplaced}&type=article&page=1`
+          )
+          .then((res) => {
+            const response = res.data.response;
+            //   console.log("pages =", response.pages);
+            setPages(response.pages);
+            setSearchNews(response.results);
+
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      } else if (stateChange === "orderBy") {
+        setIsLoading(true);
+        console.log("Sending API2");
+
+        console.log("orderBy change");
+        axios
+          .get(
+            `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=15&q=${searchQueryReplaced}&type=article&page=1`
+          )
+          .then((res) => {
+            const response = res.data.response;
+            //   console.log("pages =", response.pages);
+            setSearchNews(response.results);
+
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      } else if (stateChange === "currentPage") {
+        console.log("current page change");
+        axios
+          .get(
+            `https://content.guardianapis.com/search?api-key=test&show-fields=thumbnail,trailText&order-by=${orderBy}&page-size=15&q=${searchQueryReplaced}&type=article&page=${currentPage}`
+          )
+          .then((res) => {
+            const response = res.data.response;
+            setPages(response.pages);
+            if (currentPage === 1) {
+              setSearchNews(response.results);
+            } else {
+              setSearchNews(searchNews.concat(response.results));
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, 300);
+    return () => {
+      clearTimeout(identifier);
+    };
+  }, [searchQueryReplaced, orderBy, currentPage]);
+
+  useDependenciesDebugger({ searchQueryReplaced, orderBy, currentPage });
 
   const handleChangeOrderBy = (e) => {
     setOrderBy(e.target.value);
   };
   return (
-    <>
+    <div>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -46,29 +168,22 @@ const SearchResult = () => {
             </div>
             <div className="top-search__right">
               <ViewBookmark />
-              <select value={orderBy} onChange={handleChangeOrderBy}>
+              <select
+                className="selector"
+                value={orderBy}
+                onChange={handleChangeOrderBy}
+              >
                 <option value="newest">Newest first</option>
                 <option value="oldest">Oldest first</option>
               </select>
             </div>
           </div>
           <div className="search-content">
-            {searchNews.map((news) => (
-              <NewsCard
-                key={news.id}
-                news={{
-                  webPublicationDate: news.webPublicationDate,
-                  id: news.id,
-                  webTitle: news.webTitle.replace(/(\<.*?\>)/g, ""),
-                  trailText: news.fields.trailText.replace(/(\<.*?\>)/g, ""),
-                  thumbnail: news.fields.thumbnail,
-                }}
-              />
-            ))}
+            {searchNews.map((news, index) => mapToCard(news, index))}
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

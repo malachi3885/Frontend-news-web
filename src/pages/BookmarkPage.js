@@ -18,14 +18,25 @@ const BookmarkPage = () => {
     <>
       <div className="top-bookmark">
         <h1>All bookmark</h1>
-        <select id="orderBy" value={orderBy} onChange={changeOrderBy}>
+        <select
+          className="selector"
+          id="orderBy"
+          value={orderBy}
+          onChange={changeOrderBy}
+        >
           <option value="newest">Newest first</option>
           <option value="oldest">Oldest first</option>
         </select>
       </div>
-      {bookmark.map((news) => {
-        return <NewsCard key={news.id} news={news} />;
-      })}
+      <div className="bookmark-content">
+        {bookmark.map((news, index) => {
+          return (
+            <div className="medium-size" key={index}>
+              <NewsCard news={news} />
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

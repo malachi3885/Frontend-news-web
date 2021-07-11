@@ -12,8 +12,8 @@ const ViewBookmark = () => {
   };
   return (
     <div className="bookmark-tab" onClick={goToBookmark}>
-      <BsBookmarkFill />
-      <span>VIEW BOOKMARK</span>
+      <BsBookmarkFill className="bookmark-logo" />
+      <span className="view-bookmark">VIEW BOOKMARK</span>
     </div>
   );
 };

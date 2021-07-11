@@ -1,4 +1,27 @@
 .bookmark-tab {
   background-color: #09357b;
   color: white;
+  width: 13vw;
+  padding: 4.5px 0.833vw;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  display: flex;
+}
+
+.bookmark-tab:hover {
+  cursor: pointer;
+}
+
+.view-bookmark {
+  margin-left: 0.7vw;
+}
+
+@media only screen and (max-width: 768px) {
+  /* mobile phone */
+  .bookmark-tab {
+    font-size: 8px;
+    padding: 0px 0.833vw;
+  }
 }

@@ -31,13 +31,10 @@ const Header = () => {
   return (
     <header className="header">
       <h1 className="header-logo" onClick={goToHomepage}>
-        <span>The</span>
-        <span>Peaks</span>
+        <span className="logo-top">The</span>
+        <span className="logo-bottom">Peaks</span>
       </h1>
-      <div
-        className={`header-search ${isSearching ? "searching-on" : ""}`}
-        ref={searchAreaRef}
-      >
+      <div className={`header-search`} ref={searchAreaRef}>
         {isSearching && (
           <input
             className="search-query"
@@ -47,8 +44,11 @@ const Header = () => {
             onChange={handleSearch}
           />
         )}
-
-        <AiOutlineSearch className="search-icon" onClick={onClickSearching} />
+        <div
+          className={`search-icon-area ${isSearching ? "searching-on" : ""}`}
+        >
+          <AiOutlineSearch className="search-icon" onClick={onClickSearching} />
+        </div>
       </div>
     </header>
   );
